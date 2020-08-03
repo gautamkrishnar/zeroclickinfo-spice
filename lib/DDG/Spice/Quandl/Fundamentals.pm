@@ -5,23 +5,11 @@ use DDG::Spice;
 use Text::Trim;
 use YAML::XS 'LoadFile';
 
-# meta data
-primary_example_queries "AAPL earnings";
-secondary_example_queries "revenues aapl";
-description "Returns fundamental data for a given stock ticker";
-name "Fundamentals";
-code_url "https://github.com/brianrisk/zeroclickinfo-spice";
-icon_url "https://www.quandl.com/favicon.ico";
-topics "economy_and_finance";
-category "finance";
-attribution web => ["https://www.quandl.com", "Quandl"],
-            twitter => "quandl";
-
 # hash associating triggers with indicator codes
 my $trigger_hash = LoadFile(share('fundamentals_triggers.yml'));
 
 # triggers sorted by length so more specific is used first
-my @trigger_keys = sort { length $b <=> length $a } keys($trigger_hash);
+my @trigger_keys = sort { length $b <=> length $a } keys(%$trigger_hash);
 my $trigger_qr = join "|", @trigger_keys;
 
 # load our list of tickers

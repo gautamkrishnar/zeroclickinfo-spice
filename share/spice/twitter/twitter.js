@@ -24,6 +24,10 @@
                 return "No website provided";
             }
         }
+        
+        function getFollowers(item) {
+            return "Followers: " + DDG.abbrevNumber(item.followers_count);
+        }
 
         Spice.add({
             id: 'twitter',
@@ -39,12 +43,14 @@
                 if (item.location) {
                     subtitle.push(item.location);
                 }
+                subtitle.push(getFollowers(item));
 
                 return {
                     image: bigger_picture(item.profile_image),
                     title: item.name,
                     subtitle: subtitle,
                     altSubtitle: getURL(item),
+                    url: "https://twitter.com/" + item.user,
                     description: item.description
                 };
             },

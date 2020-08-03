@@ -1,8 +1,6 @@
 (function(env) {
     "use strict";
     env.ddg_spice_rain = function(api_result) {
-        console.log(api_result);
-
         // Check for errors.
         if(!api_result || api_result.error || !api_result.currently || !api_result.flags['ddg-location']) {
             return Spice.failed('rain');
@@ -13,8 +11,8 @@
             name: 'Rain',
             data: api_result,
             meta: {
-                sourceName: "Forecast.io",
-                sourceUrl: "http://forecast.io/#/f/" + api_result.latitude + "," + api_result.longitude,
+                sourceName: "Dark Sky",
+                sourceUrl: "https://darksky.net/" + api_result.latitude + "," + api_result.longitude,
             },
             normalize: function(item) {
                 var is_raining = ["hail", "thunderstorm", "tornado", "sleet", "rain"].indexOf(item.currently.icon) >= 0;

@@ -4,30 +4,18 @@ use DDG::Spice;
 use Text::Trim;
 use YAML::XS 'LoadFile';
 
-# meta data
-primary_example_queries "world population";
-secondary_example_queries "flooding in the US";
-description "Returns data collected by the World Bank";
-name "World Bank";
-code_url "https://github.com/brianrisk/zeroclickinfo-spice";
-icon_url "https://www.quandl.com/favicon.ico";
-topics "economy_and_finance", "geography", "social";
-category "facts";
-attribution web => ["https://www.quandl.com", "Quandl"],
-            twitter => "quandl";
-            
 # hash associating triggers with indicator codes
 my $primary_hash = LoadFile(share('world_bank_primary.yml')); 
 
 # triggers sorted by length so more specific is used first
-my @primary_keys = sort { length $b <=> length $a } keys($primary_hash);
+my @primary_keys = sort { length $b <=> length $a } keys(%$primary_hash);
 my $primary_qr = join "|", @primary_keys;
 
 # hash associating secondary triggers with their codes
 my $secondary_hash = LoadFile(share('world_bank_secondary.yml'));
 
 # array of secondary triggers
-my @secondary_keys = keys($secondary_hash);
+my @secondary_keys = keys(%$secondary_hash);
 my $secondary_qr = join "|", @secondary_keys;
 
 # defining our triggers

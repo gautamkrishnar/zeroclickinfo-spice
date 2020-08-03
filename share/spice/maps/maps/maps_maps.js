@@ -1,21 +1,22 @@
-DDG.require('maps',function(){
-    ddg_spice_maps_maps = function(response) {
-        
-        if (!response || !response.length) { return Spice.failed('maps'); }
+(function(env) {
+    "use strict";
 
-        // OSM sends back a bunch of places, just want the first one for now
-        response = [response[0]]; 
-                                
-        if (!DDG.isRelevant(response[0].display_name.toLowerCase())) { 
-            return Spice.failed('maps'); 
-        } 
+    ddg_spice_maps_maps = function(res) {
+        if (!res) { return DDG.duckbar.failed('maps_maps'); }
+
+        var response = DDG.localAPI.getMapsResponse(res);
+
+        if (!response || !response.results || !response.results.length) {
+            return DDG.duckbar.failed('maps_maps');
+        }
         
-        Spice.add({
-            data: response,
-            id: "maps",
-            name: "maps",
-            model: "Place"
+        return Spice.add({
+            data: response.results,
+            id: 'maps_maps',
+            name: 'maps',
+            answerType: 'Maps',
+            allowMultipleCalls: true
         });
 
-    };
-});
+    }
+}(this));
